@@ -1,0 +1,7 @@
+exportPattern("^[[:alpha:]]+")
+import("NMF")
+import("MASS")
+import("cluster")
+import("mclust")
+import("InterSIM")
+importFrom("grDevices", "dev.new")
