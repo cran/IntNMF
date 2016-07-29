@@ -1,5 +1,4 @@
-W.fcnnls <-
-function (x=x, y=y, verbose = FALSE, pseudo = FALSE, eps = 0)
+W.fcnnls <- function (x=x, y=y, weight = wt, verbose = FALSE, pseudo = FALSE, eps = 0)
 {
 # W.fcnnls : Function to calculate common W using Nonnegative Least Square method
 # This function was obtained from NMF package (Gaujoux R., BMC Bioinformatics 2010,11:367) at
@@ -18,6 +17,7 @@ function (x=x, y=y, verbose = FALSE, pseudo = FALSE, eps = 0)
 # The modified function calculates common W using estimated Hi's
 # x = list(H), y = list(dat)
 #--------------------------------------------------------------------------------
+wt=NULL
 for (i in 1:length(x)){
     if (any(dim(y[[i]]) == 0L)) {
         stop("Empty target matrix 'y' [", paste(dim(y), collapse = " x "),
@@ -25,13 +25,13 @@ for (i in 1:length(x)){
     if (any(dim(x[[i]]) == 0L)) {
         stop("Empty regression variable matrix 'x' [", paste(dim(x),
             collapse = " x "), "]")}
-}
-
-#C <- x     # Original
+	}
+	
+	#C <- x     # Original
     #A <- y     # Original
     C <- t(x[[1]])  # Or you can put C = t(x[[2]]) and A = t(y[[2]])
     A <- t(y[[1]])
-
+	
     nObs = nrow(C)
     lVar = ncol(C)
     if (nrow(A) != nObs)
@@ -40,16 +40,16 @@ for (i in 1:length(x)){
     W = matrix(0, lVar, pRHS)
     iter = 0
     maxiter = 3 * lVar
-    #CtC = crossprod(C)        # Original
-    #CtA = crossprod(C, A)     # Original
-CtC <- 0
-for (i in 1:length(x)) CtC <- CtC + t(x[[i]]%*%t(x[[i]]))  # Adjusted in order to compute common W 
-CtA <- 0
-for (i in 1:length(x)) CtA <- CtA + t(y[[i]]%*%t(x[[i]]))  # Adjusted in order to compute common W
+    #CtC = crossprod(C)        			# Original
+    #CtA = crossprod(C, A)     			# Original
+	CtC <- 0
+	for (i in 1:length(x)) CtC <- CtC + sqrt(weight[i])*t(x[[i]]%*%t(x[[i]]))  # Adjusted in order to compute common W 
+	CtA <- 0
+	for (i in 1:length(x)) CtA <- CtA + sqrt(weight[i])*t(y[[i]]%*%t(x[[i]]))  # Adjusted in order to compute common W
     #K = .cssls(CtC, CtA, pseudo = pseudo)  # Original
-K = adj.cssls(CtC, CtA)                
+	K = adj.cssls(CtC, CtA)                
     Pset = K > 0
-
+	
     K[!Pset] = 0
     D = K
     Fset = which(colSums(Pset) != lVar)
@@ -60,7 +60,7 @@ K = adj.cssls(CtC, CtA)
             cat(sprintf("%d ", oitr))
         K[, Fset] = adj.cssls(CtC, CtA[, Fset, drop = FALSE], Pset[,
         #    Fset, drop = FALSE], pseudo = pseudo)                    # Original
-Fset, drop = FALSE])
+		Fset, drop = FALSE])
         Hset = Fset[colSums(K[, Fset, drop = FALSE] < eps) >
             0]
         if (length(Hset) > 0) {
@@ -92,7 +92,7 @@ Fset, drop = FALSE])
                 Pset[idx2zero] = FALSE
                 K[, Hset] = adj.cssls(CtC, CtA[, Hset, drop = FALSE],
                 #  Pset[, Hset, drop = FALSE], pseudo = pseudo)            # Original
-  Pset[, Hset, drop = FALSE])
+				  Pset[, Hset, drop = FALSE])
                 Hset = which(colSums(K < eps) > 0)
                 nHset = length(Hset)
             }
@@ -108,7 +108,7 @@ Fset, drop = FALSE])
             Pset[(Fset - 1) * lVar + mxidx] = TRUE
             D[, Fset] = K[, Fset, drop = FALSE]
         }
-
+		
     }
     list(coef = K, Pset = Pset)
 }

@@ -9,7 +9,8 @@ Given a single or multiple types of datasets (e.g. DNA methylation, mRNA express
 }
 \usage{
 nmf.opt.k(dat = dat, n.runs = 30, n.fold = 5, k.range = 2:8, result = TRUE, 
-make.plot = TRUE, progress = TRUE, st.count = 10, maxiter = 100)
+make.plot = TRUE, progress = TRUE, st.count = 10, maxiter = 100,
+wt=if(is.list(dat)) rep(1,length(dat)) else 1)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -39,6 +40,9 @@ Count for stability in connectivity matrix, default is 10.
 }
   \item{maxiter}{
 Maximum number of iteration, default is 100.
+}
+   \item{wt}{
+Weight
 }
 }
 

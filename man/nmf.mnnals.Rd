@@ -9,7 +9,7 @@ Given a single or multiple types of datasets (e.g. DNA methylation, mRNA express
 }
 \usage{
 nmf.mnnals(dat = dat, k = k, maxiter = 200, st.count = 20, n.ini = 30, ini.nndsvd = TRUE, 
-seed = TRUE)
+seed = TRUE,wt=if(is.list(dat)) rep(1,length(dat)) else 1)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -33,6 +33,9 @@ Initialization of the Hi matrices using non negative double singular value decom
 }
   \item{seed}{
 seed
+}
+   \item{wt}{
+Weight
 }
 }
 

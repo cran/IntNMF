@@ -1,4 +1,4 @@
-exportPattern("^[[:alpha:]]+")
+export("ClusterEntropy","ClusterPurity","ConsensusMatPlot","nmf.mnnals","nmf.opt.k","SilhouettePlot")
 import("NMF")
 import("MASS")
 import("cluster")
