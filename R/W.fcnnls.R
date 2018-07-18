@@ -1,3 +1,4 @@
+# Calculate common W using all H and all data
 W.fcnnls <- function (x=x, y=y, weight = wt, verbose = FALSE, pseudo = FALSE, eps = 0)
 {
 # W.fcnnls : Function to calculate common W using Nonnegative Least Square method
@@ -5,9 +6,9 @@ W.fcnnls <- function (x=x, y=y, weight = wt, verbose = FALSE, pseudo = FALSE, ep
 # https://github.com/renozao/NMF/blob/master/R/algorithms-snmf.R
 # and was modified for using multiple data sets.
 # The original matlab code was proposed by M. H. Van Benthem and M. R. Keenan, J. Chemometrics 2004; 18: 441-450
-# Given A and C this algorithm solves for the optimal 
+# Given A and C this algorithm solves for the optimal
 # K in a least squares sense, using that
-#      A = C*K 
+#      A = C*K
 # in the problem
 #      min ||A-C*K||, s.t. K>=0, for given A and C.
 # @param C the matrix of coefficients
@@ -26,12 +27,12 @@ for (i in 1:length(x)){
         stop("Empty regression variable matrix 'x' [", paste(dim(x),
             collapse = " x "), "]")}
 	}
-	
+
 	#C <- x     # Original
     #A <- y     # Original
     C <- t(x[[1]])  # Or you can put C = t(x[[2]]) and A = t(y[[2]])
     A <- t(y[[1]])
-	
+
     nObs = nrow(C)
     lVar = ncol(C)
     if (nrow(A) != nObs)
@@ -43,13 +44,13 @@ for (i in 1:length(x)){
     #CtC = crossprod(C)        			# Original
     #CtA = crossprod(C, A)     			# Original
 	CtC <- 0
-	for (i in 1:length(x)) CtC <- CtC + sqrt(weight[i])*t(x[[i]]%*%t(x[[i]]))  # Adjusted in order to compute common W 
+	for (i in 1:length(x)) CtC <- CtC + sqrt(weight[i])*t(x[[i]]%*%t(x[[i]]))  # Adjusted in order to compute common W
 	CtA <- 0
 	for (i in 1:length(x)) CtA <- CtA + sqrt(weight[i])*t(y[[i]]%*%t(x[[i]]))  # Adjusted in order to compute common W
     #K = .cssls(CtC, CtA, pseudo = pseudo)  # Original
-	K = adj.cssls(CtC, CtA)                
+	K = adj.cssls(CtC, CtA)
     Pset = K > 0
-	
+
     K[!Pset] = 0
     D = K
     Fset = which(colSums(Pset) != lVar)
@@ -108,7 +109,7 @@ for (i in 1:length(x)){
             Pset[(Fset - 1) * lVar + mxidx] = TRUE
             D[, Fset] = K[, Fset, drop = FALSE]
         }
-		
+
     }
     list(coef = K, Pset = Pset)
 }

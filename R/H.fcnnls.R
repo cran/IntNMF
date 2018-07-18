@@ -1,14 +1,14 @@
-H.fcnnls <-
-function (x=x, y=y, verbose = FALSE, pseudo = FALSE, eps = 0)
+# Calculate Hi's for each data using common W
+H.fcnnls <- function (x=x, y=y, verbose = FALSE, pseudo = FALSE, eps = 0)
 {
 # H.fcnnls : Function to calculate H matrix using Nonnegative Least Square method
 # This function was obtained from NMF package (Gaujoux R., BMC Bioinformatics 2010,11:367) at
 # https://github.com/renozao/NMF/blob/master/R/algorithms-snmf.R
-# and was made minor bug fixes. 
+# and was made minor bug fixes.
 # The original matlab code was proposed by M. H. Van Benthem and M. R. Keenan, J. Chemometrics 2004; 18: 441-450
-# Given A and C this algorithm solves for the optimal 
+# Given A and C this algorithm solves for the optimal
 # K in a least squares sense, using that
-#      A = C*K 
+#      A = C*K
 # in the problem
 #      min ||A-C*K||, s.t. K>=0, for given A and C.
 # @param C the matrix of coefficients
@@ -27,8 +27,8 @@ function (x=x, y=y, verbose = FALSE, pseudo = FALSE, eps = 0)
             collapse = " x "), "]")
     }
 
-    C <- x  
-    A <- y  
+    C <- x
+    A <- y
     nObs = nrow(C)
     lVar = ncol(C)
     if (nrow(A) != nObs)
@@ -37,10 +37,10 @@ function (x=x, y=y, verbose = FALSE, pseudo = FALSE, eps = 0)
     W = matrix(0, lVar, pRHS)
     iter = 0
     maxiter = 3 * lVar
-    CtC = crossprod(C)        
-    CtA = crossprod(C, A)     
+    CtC = crossprod(C)
+    CtA = crossprod(C, A)
     #K = .cssls(CtC, CtA, pseudo = pseudo)  # Original
-K = adj.cssls(CtC, CtA)                
+K = adj.cssls(CtC, CtA)
     Pset = K > 0
 
     K[!Pset] = 0
