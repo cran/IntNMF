@@ -1,4 +1,4 @@
-abee79205131f04493505b942c6afb61 *DESCRIPTION
+ce56164c7c53d0a95fc78db8ca4b7d59 *DESCRIPTION
 20eaf9789a72d21231e82d5cd7bd3876 *NAMESPACE
 f0b3bcafc76d9c5b93e03f694333df08 *R/ClusterEntropy.R
 57a7d4515f9801c25d563b9632e6c516 *R/ClusterPurity.R
@@ -11,9 +11,9 @@ d8e635500d9d4195512dd8e572392807 *R/W.fcnnls.R
 5ca2ac4eb5d12345025e55f511892f2f *R/logit.R
 554e972fcf94a757d4f51556b4405cc0 *R/nmf.mnnals.R
 9e7844e9d70a9c0e10414bde9203997d *R/nmf.opt.k.R
-3e4cd1a5ca4a240b2f1f40fc8a1b6bd2 *man/ClusterEntropy.Rd
-7d33bad82d5b81305b0030637b1e0503 *man/ClusterPurity.Rd
-9c33d2bc05a1c795b8912271193af7c6 *man/ConsensusMatPlot.Rd
-32f99afff4476467507199d10d11a4a7 *man/SilhouettePlot.Rd
-beea3dc3861e80aa14834c8d20423a26 *man/nmf.mnnals.Rd
-0b7295d300852cb4d4f108e61c2a3c97 *man/nmf.opt.k.Rd
+f7fff16c91d049ecd45bb1116937d7f1 *man/ClusterEntropy.Rd
+2a5a026cc233a5572ffec4394ad26902 *man/ClusterPurity.Rd
+7949806a9ef94c16775c7747d2c176d2 *man/ConsensusMatPlot.Rd
+f737721bf2baaf86c4548230f84adbf1 *man/SilhouettePlot.Rd
+f0544d60a7759482fcdeace4f5f8c65b *man/nmf.mnnals.Rd
+c29f551439bd1333d0d7084377e09054 *man/nmf.opt.k.Rd
